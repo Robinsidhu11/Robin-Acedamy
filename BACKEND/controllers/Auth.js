@@ -178,7 +178,7 @@ exports.login=async (req,res)=>{
             //creating jwt token
             const payload={
                 email:isRegistered.email,
-                role:isRegistered.role,
+                role:isRegistered.accountType,
                 id:isRegistered._id
             }
             const token=await jwt.sign(payload,process.env.JWT_SECRET,{
