@@ -5,6 +5,7 @@ const bcrypt=require('bcrypt')
 const profile=require('../models/Profile')
 const Profile = require('../models/Profile')
 const jwt=require('jsonwebtoken')
+const mailSender=require('../utils/mailSender')
 require('dotenv').config()
 
 //sendOTP (basically adds entry of otp in db which initiates the pre middleware and sens otp)
@@ -216,3 +217,58 @@ exports.login=async (req,res)=>{
 }
 
 //changePassword
+exports.changePassword=async (req,res)=>{
+    try{
+        //get data from req body, old password,new password and confirm password
+        const {oldPassword,newPassword,newConfirmPasword,email}=req.body
+
+        //validates
+        if(newPassword!==newConfirmPasword){
+            return res.status(403).json({
+                success:false,
+                message:"new password and confirm password does not match"
+            })
+        }
+
+        //check if user is registered
+        const user=await User.findOne({email:email})
+        //if user doesnt exist
+        if(! user){
+            return res.status(403).json({
+                success:false,
+                message:"user not registered"
+            })
+        }
+        //check if old password is same as writen in db then update in db with new password
+        if(await bcrypt.compare(oldPassword,user.password)){
+            //hashpassword first
+            const hashedPassword=await bcrypt.hash(newPassword,10)
+            const response=await User.findOneAndUpdate(email,{password:hashedPassword})
+            
+            //send password changed mail to user
+            await mailSender(email,"PASSWORD CHANGED SUCCESSFULLY","your password has been changed. congratulations")
+
+            //return response
+            return res.status(200).json({
+                success:true,
+                message:"password changed successfully",
+                updatedUserDoc:response
+            })
+        }
+        else{
+            return res.status(403).json({
+                success:false,
+                message:"old password doesnt matches with your current password"
+            })
+        }
+
+
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant change password for now",
+            error:err.message
+        })
+    }
+}
