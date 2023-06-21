@@ -1,6 +1,12 @@
 const User=require('../models/User')
-const otp=require('../models/otp')
+const Otp=require('../models/otp')
 const otpgenerator=require('otp-generator')
+const bcrypt=require('bcrypt')
+const profile=require('../models/Profile')
+const Profile = require('../models/Profile')
+const jwt=require('jsonwebtoken')
+require('dotenv').config()
+
 //sendOTP (basically adds entry of otp in db which initiates the pre middleware and sens otp)
 exports.sendOTP=async (req,res)=>{
     try{
@@ -23,7 +29,7 @@ exports.sendOTP=async (req,res)=>{
         
 
         //check if otp unique or not (check if already in otp collection or not . if not then add it to otp collection)
-        let checkOtp=await otp.findOne({otp:otpvalue})
+        let checkOtp=await Otp.findOne({otp:otpvalue})
         // as long we dont get unique otp, keep on generating otps (bad practice)
         while(checkOtp){
             otpvalue=otpgenerator.generate(6,{
@@ -31,7 +37,7 @@ exports.sendOTP=async (req,res)=>{
                 upperCaseAlphabets:false,
                 specialChars:false
             })
-            checkOtp=await otp.findOne({otp:otpvalue})
+            checkOtp=await Otp.findOne({otp:otpvalue})
         }
         console.log("OTP GENERATED IS ",otpvalue)
 
@@ -53,8 +59,160 @@ exports.sendOTP=async (req,res)=>{
         })
     }
 }
+
 //signUp
+exports.signUp=async (req,res)=>{
+    try{
+        //fetch details from req body, and validate them
+        const {email,firstName,lastName,password,confirmPassword,accountType,contactNumber,otp}=req.body
+        //validate
+        if(!email || !firstName || !lastName || !password || !confirmPassword || !otp){
+            return res.status(403).json({
+                success:false,
+                message:"All fields are required"
+            })
+        }
+        //if both password doesnt match
+        if(password!==confirmPassword){
+            return res.status(400).json({
+                success:false,
+                message:"password and confirm password does not match"
+            })
+        }
+
+        //check if user already exist before
+        const isPresent=await User.findOne({email:email})
+        if(isPresent){
+            return res.status(400).json({
+                success:false,
+                message:"user already registered. go and login"
+            })
+        }
+
+        //find most recent otp from db
+        const recentOtp=await Otp.findOne({email}).sort({createdAt:-1}).limit(1)
+        console.log("RECENT OTP IS ",recentOtp)
+
+        //validate otp
+        if(recentOtp.length==0){
+            return res.status(400).json({
+                success:false,
+                message:"Recent OTP found"
+            })
+        }
+        else if(otp !== recentOtp.otp){
+            return res.status(400).json({
+                success:false,
+                message:"otp doesnt match/ invalid otp"
+            })
+        }
+
+        //hash password
+        const hashedPassword=await bcrypt.hash(password,10);
+
+        //create profile doc for this user
+        const profile=await Profile.create({
+            gender:null,
+            about:null,
+            dateOfBirth:null,
+            contactNumber:null
+        })
+        //register user entry in db
+        const response=await User.create({
+            email,
+            firstName,
+            lastName,
+            password:hashedPassword,
+            accountType,
+            //need to link profile doc here for this user
+            additionalDetails:profile._id,
+            // using api we can generate a profile pic from name of user
+            image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
+        })
+
+        return res.status(200).json({
+            success:true,
+            message:"user registered successfully",
+            response
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant signup right now/ user cant be registered. please try again ",
+            error:err.message
+        })
+    }
+
+}
 
 //Login
+exports.login=async (req,res)=>{
+    try{
+        const {email,password}=req.body
+        //validate data
+        if(!email || !password){
+            return res.status(403).json({
+                success:false,
+                message:"fill all fields first"
+              
+            })
+        }
+
+        //check if email exist,if not ask user to signup first
+        const isRegistered=await User.findOne({email:email}).populate("additionalDetails")
+        if(! isRegistered){
+            return res.status(400).json({
+                success:false,
+                message:"user is not registered. signup first"
+              
+            })
+        }
+
+        //validate passwords
+        const passwordMatch=await bcrypt.compare(password,isRegistered.password)
+        if(passwordMatch){
+            //create jwt token and send it as a cookie too
+
+            //creating jwt token
+            const payload={
+                email:isRegistered.email,
+                role:isRegistered.role,
+                id:isRegistered._id
+            }
+            const token=await jwt.sign(payload,process.env.JWT_SECRET,{
+                expiresIn:"2h"
+            })
+            isRegistered.password=undefined
+            isRegistered.token=token
+
+            //create cookie and send response
+            const options={
+                //expiry date is for next 3 days
+                expires: new Date(Date.now() + 3*24*60*60*1000),
+                //so that user cant access it
+                httpOnly:true
+            }
+            res.cookie("token",token,options).status(200).json({
+                success:true,
+                message:"user logged in and token generated successfully"
+            })
+        }
+        else{
+            return res.status(401).json({
+                success:false,
+                message:"password is incorrect",
+               
+            })
+        }
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant login at the moment",
+            error:err.message
+        })
+    }
+}
 
 //changePassword
