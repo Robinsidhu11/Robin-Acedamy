@@ -1,6 +1,5 @@
 const uploadImageToCloudinary=require('../utils/imageUploader')
-const Tag=require('../models/Tags')
-const user=require('../models/User')
+const Category=require('../models/Category')
 const course=require('../models/Course')
 const User = require('../models/User')
 const Course = require('../models/Course')
@@ -8,13 +7,13 @@ const Course = require('../models/Course')
 const createCourse=async (req,res)=>{
     try{
         //fetch data
-        const {courseName,courseDescription,whatYouWillLearn,price,tag}=req.body
+        const {courseName,courseDescription,whatYouWillLearn,price,category}=req.body
 
         //fetch thumbnail
         const thumbnail=req.files.thumbnailImage
 
         //validation
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category){
             return res.status(400).json({
                 success:false,
                 message:"all fields are required"
@@ -34,12 +33,12 @@ const createCourse=async (req,res)=>{
             })
         }
 
-        //extra layer checking if tag is valid or not
-        const tagDetails=await Tag.findById({tag})
-        if(!tagDetails){
+        //extra layer checking if category is valid or not
+        const categoryDetails=await Category.findById({category})
+        if(!categoryDetails){
             return res.status(400).json({
                 success:false,
-                message:"Tag details not found"
+                message:"category details not found"
             })
         }
 
@@ -53,7 +52,7 @@ const createCourse=async (req,res)=>{
             price,
             instructor:instructorDetails._id,
             whatYouWillLearn,
-            tag:tagDetails._id,
+            category:categoryDetails._id,
             thumbnail:thumbnailUpoaded.secure_url
         })
 
@@ -66,9 +65,9 @@ const createCourse=async (req,res)=>{
             ,{new:true}
             )
         
-        //add course to tag schema too
-        const updatedTagDetails=await Tag.findByIdAndUpdate(
-            {_id:tagDetails.id},
+        //add course to category schema too
+        const updatedCategoryDetails=await Category.findByIdAndUpdate(
+            {_id:categoryDetails.id},
             {
                 $push:{Courses: newCourse._id}
             },

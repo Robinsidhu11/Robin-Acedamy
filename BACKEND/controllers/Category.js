@@ -1,7 +1,7 @@
-const Tag=require('../models/Tags')
+const Category=require('../models/Category')
 
-//to create a tag (only for admin to access)
-exports.createTag=async (req,res)=>{
+//to create a category (only for admin to access)
+exports.createCategory=async (req,res)=>{
     try{
         //get data from body
         const {name,description}=req.body
@@ -13,44 +13,44 @@ exports.createTag=async (req,res)=>{
             })
         }
 
-        //create tag entry in db
-        const response=await Tag.create({
+        //create Category entry in db
+        const response=await Category.create({
             name:name,
             description:description
         })
-        console.log("Tag created is ",response)
+        console.log("Category created is ",response)
 
         return res.status(200).json({
             success:true,
-            message:"tag created successfully"
+            message:"Category created successfully"
         })
 
     }
     catch(err){
         return res.status(500).json({
             success:false,
-            message:"error in creating tag",
+            message:"error in creating Category",
             error:err.message
         })
     }
 }
 
-//to get all tags present in db
-exports.getAllTags=async (req,res)=>{
+//to get all Categories present in db
+exports.getAllCategories=async (req,res)=>{
     try{
-        //we written the second parametere below in fn  to just make sure we get only those tags entry which have both name and description present
-        const response=await Tag.find({},{name:true,description:true})
+        //we written the second parametere below in fn  to just make sure we get only those Category entry which have both name and description present
+        const response=await Category.find({},{name:true,description:true})
 
         return res.status(200).json({
             success:true,
-            message:"tags fetched successfully",
+            message:"Category fetched successfully",
             response
         })
     }
     catch(err){
         return res.status(500).json({
             success:false,
-            message:"error in fetching all tags",
+            message:"error in fetching all Categories",
             error:err.message
         })
     }

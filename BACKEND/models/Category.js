@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 //Tag is created to create category like DSA, AI , development. which will have multiple courses inside it
 //this tag creation will only be done by admin no on else can create edit tags.
-const tagSchema=new mongoose.Schema({
+const categorySchema=new mongoose.Schema({
    name:{
     type:String
    },
@@ -14,6 +14,6 @@ const tagSchema=new mongoose.Schema({
    }],
 })
 
-module.exports=mongoose.model("Tag",tagSchema)
-//Tag is created to create category like DSA, AI , development. which will have multiple courses inside it
-//this tag creation will only be done by admin no on else can create edit tags.
+module.exports=mongoose.model("Category",categorySchema)
+//Category is created to create category like DSA, AI , development. which will have multiple courses inside it
+//this Category creation will only be done by admin no on else can create edit tags.
