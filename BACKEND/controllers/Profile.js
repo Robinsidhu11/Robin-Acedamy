@@ -57,3 +57,43 @@ exports.updateProfile=async (req,res)=>{
         })
     }
 }
+
+//GET all details of a USER 
+exports.getAllUserDetails=async (req,res)=>{
+    try{
+        //get user id
+        const userid=req.user.id
+
+        //validation
+        if(!userid){
+            return res.status(400).json({
+                success:false,
+                message:"user id not avaliable"
+            })
+        }
+
+        //validate user from db
+        const userDetails=await User.findById({_id:userid}).populate("additionalDetails").exec()
+
+        if(!userDetails){
+            return res.status(400).json({
+                success:false,
+                message:"no such user exist in db"
+            })
+        }
+
+        return res.status(200).json({
+            success:true,
+            message:"user details fetched",
+            userDetails
+        })
+
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant fetch user detail",
+            error:err.message
+        })
+    }
+}
