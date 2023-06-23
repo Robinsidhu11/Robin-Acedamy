@@ -114,3 +114,67 @@ exports.getAverageRating=async(req,res)=>{
         })
     }
 }
+
+//to get all the ratings/reviews  (list) for 1 course
+exports.getAllRatingsForOneCourse=async (req,res)=>{
+    try{
+        //fetch course id
+        const {courseId}=req.body
+        if(!courseId){
+            return res.status(400).json({
+                success:false,
+                message:"course id not present"
+            })
+        }
+
+        //fetch the rating/reviews for a course
+        const allRatingReviews=await RatingAndReview({course:courseId}).populate("user").populate("course").exec()
+
+        if(!allRatingReviews){
+            return res.status(400).json({
+                success:false,
+                message:"no rating/review for this course"
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            message:"fetched successfully",
+            allRatingReviews
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"unable to fetch ratings/reviews"
+        })
+    }
+}
+
+//fetch all the ratings/reviews for any course all together
+exports.getAllRatings=async (req,res)=>{
+    try{
+        //this alone would have been enough. but say i want them to get sort in descending order of rating
+        //also we learned a way earlier of populating the inside parameteres of model. using select, heres new method we can use to:-
+        const allRatingsReviews=await RatingAndReview.find({}).sort({rating:"desc"}).populate({
+            path:"user",
+            select:"firstName lastName email image"//insid euser only these will get populted not the rest
+        }).populate({
+            path:"course",
+            select:"courseName"
+        }).exec()
+
+
+        return res.status(200).json({
+            success:true,
+            message:"Fetched successfully",
+            allRatingsReviews
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant fetch error",
+            error:err.message
+        })
+    }   
+}
