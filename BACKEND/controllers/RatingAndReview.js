@@ -69,3 +69,48 @@ exports.createRating=async (req,res)=>{
         })
     }
 }
+
+//get average rating  to display for a particular course
+exports.getAverageRating=async(req,res)=>{
+    try{
+        //get course id
+        const {courseId}=req.body
+
+        //calculate average using aggregate avg of mongoose
+        const result=await RatingAndReview.aggregate([
+            {   //match with only those enrtries for which this is course id
+                $match:{
+                    course: new mongoose.Schema.Types.ObjectId(courseId)
+                }
+            },
+            {   //using avg inside group key to find answer average
+                $group:{
+                    _id:null,
+                    averageRating:{$avg: "$rating"}
+                }
+            }
+        ])
+
+        //if atleast 1 rating is given to course
+        if(result.length>0){
+            return res.status(200).json({
+                success:true,
+                averageRating:result[0].averageRating
+            })
+        }
+
+        //if no rating give to course as of now
+        return res.status(200).json({
+            success:true,
+            averageRating:0,
+            message:"no rating has been given to course as of now"
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            averageRating:err.message,
+            message:"error in finding avg of ratings"
+        })
+    }
+}
