@@ -110,6 +110,8 @@ exports.signUp=async (req,res)=>{
 
         //hash password
         const hashedPassword=await bcrypt.hash(password,10);
+        // let approved = "";
+		// approved === "Instructor" ? (approved = false) : (approved = true);
 
         //create profile doc for this user
         const profile=await Profile.create({

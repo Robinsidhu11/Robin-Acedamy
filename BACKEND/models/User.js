@@ -51,7 +51,18 @@ const UserSchema=new mongoose.Schema({
     },
     resetPasswordTokenExpiry:{
         type:Date
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    approved: {
+        type: Boolean,
+        default: true,
     }
-})
+},
+{timestamps: true}
+// Add timestamps for when the document is created and last modified
+)
 
 module.exports=mongoose.model("User",UserSchema)

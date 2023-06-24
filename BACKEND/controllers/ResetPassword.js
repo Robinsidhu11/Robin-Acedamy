@@ -52,7 +52,7 @@ exports.resetPasswordTokenCreate=async (req,res)=>{
 //resetPassword (when user will submit password and confirm password this will get executed. validate and then update the password)
 exports.resetPasswordFn=async (req,res)=>{
     try{    
-        //thats why we passed reset token in user schema. because now we will be able t track that user by using reset token. which ever user clicks on that link
+        //thats why we passed reset token in user schema. because now we will be able to track that user by using reset token. which ever user clicks on that link
         const {token,password,confirmPassword}=req.body
         //if passwords dont match
         if(password!==confirmPassword){
