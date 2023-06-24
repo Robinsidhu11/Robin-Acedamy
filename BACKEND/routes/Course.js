@@ -1,5 +1,5 @@
 const express=require('express')
-const courseRoutes=express.Router()
+const Routes=express.Router()
 
 //importing auth middleware
 const {authenticate,isStudent,isInstructor,isAdmin}=require('../middlewares/auth')
@@ -24,31 +24,31 @@ const {createRating,getAverageRating,getAllRatingsForOneCourse,getAllRatings}=re
 // ********************************************************************************************************
 
 //creating course, only instructor can do so
-courseRoutes.post("/createCourse",authenticate,isInstructor,createCourse)
+Routes.post("/createCourse",authenticate,isInstructor,createCourse)
 
 //add a section to course
-courseRoutes.post("/addSection",authenticate,isInstructor,createSection)
+Routes.post("/addSection",authenticate,isInstructor,createSection)
 
 //update a section
-courseRoutes.post("/updateSection",authenticate,isInstructor,updateSection)
+Routes.post("/updateSection",authenticate,isInstructor,updateSection)
 
 //delete a section
-courseRoutes.post("/updateSection",authenticate,isInstructor,deleteSection)
+Routes.post("/updateSection",authenticate,isInstructor,deleteSection)
 
 //edit subsection
-courseRoutes.post("/updateSubSection",authenticate,isInstructor,updateSubSection)
+Routes.post("/updateSubSection",authenticate,isInstructor,updateSubSection)
 
 //delete sub section
-courseRoutes.post("/deleteSubSection",authenticate,isInstructor,deleteSubSection)
+Routes.post("/deleteSubSection",authenticate,isInstructor,deleteSubSection)
 
 //add a subsection a section (create a subs section)
-courseRoutes.post("/addSubSection",authenticate,isInstructor,createSubSection)
+Routes.post("/addSubSection",authenticate,isInstructor,createSubSection)
 
 // Get all Registered Courses
-courseRoutes.post("/getAllCourses",showAllCourses)
+Routes.post("/getAllCourses",showAllCourses)
 
 // Get Details for a Specific Courses
-courseRoutes.post("/getCourseDetails",getCourseDetails)
+Routes.post("/getCourseDetails",getCourseDetails)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)
@@ -56,15 +56,17 @@ courseRoutes.post("/getCourseDetails",getCourseDetails)
 // Category can Only be Created by Admin
 // TODO: Put IsAdmin Middleware here
 
-courseRoutes.post("/createCategory",authenticate,isAdmin,createCategory)
-courseRoutes.post("/showAllCategories",getAllCategories)
-courseRoutes.post("/getCategoryPageDetails",categoryPageDetails)
+Routes.post("/createCategory",authenticate,isAdmin,createCategory)
+Routes.post("/showAllCategories",getAllCategories)
+Routes.post("/getCategoryPageDetails",categoryPageDetails)
 
 // ********************************************************************************************************
 //                                      Rating and Review
 // ********************************************************************************************************
 
-courseRoutes.post("/createRating",authenticate,isStudent,createRating)
-courseRoutes.post("/getAverageRating",getAverageRating)
-courseRoutes.post("/getReviews",getAllRatings)
-courseRoutes.post("/getReviewratingforspecificcourse",getAllRatingsForOneCourse)
+Routes.post("/createRating",authenticate,isStudent,createRating)
+Routes.post("/getAverageRating",getAverageRating)
+Routes.post("/getReviews",getAllRatings)
+Routes.post("/getReviewratingforspecificcourse",getAllRatingsForOneCourse)
+
+module.exports=Routes
