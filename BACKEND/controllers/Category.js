@@ -45,7 +45,7 @@ exports.getAllCategories=async (req,res)=>{
         return res.status(200).json({
             success:true,
             message:"Category fetched successfully",
-            response
+            data:response
         })
     }
     catch(err){
@@ -82,6 +82,7 @@ exports.categoryPageDetails=async (req,res)=>{
 
         //TODO: TOP SELLING COURSES, say top 10 courses
         const topSellingCourses=await Course.find({}).sort({countOfStudentsEnrolled:"desc"}).exec()
+
         //return
         return res.status(200).json({
             success:true,

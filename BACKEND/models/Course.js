@@ -48,7 +48,15 @@ const courseSchema=new mongoose.Schema({
     countOfStudentsEnrolled:{
         type:Number,
         default:0
-    }
+    },
+    tag:{
+        type:String,
+        required:true
+    },
+    status: {
+		type: String,
+		enum: ["Draft", "Published"],
+	}
 })
 
 module.exports=mongoose.model("Course",courseSchema)

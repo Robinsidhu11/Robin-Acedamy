@@ -7,13 +7,13 @@ const Course = require('../models/Course')
 exports.createCourse=async (req,res)=>{
     try{
         //fetch data
-        const {courseName,courseDescription,whatYouWillLearn,price,category}=req.body
+        const {courseName,courseDescription,whatYouWillLearn,price,category,tag,status}=req.body
 
         //fetch thumbnail
         const thumbnail=req.files.thumbnailImage
 
         //validation
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || tag){
             return res.status(400).json({
                 success:false,
                 message:"all fields are required"
@@ -23,6 +23,9 @@ exports.createCourse=async (req,res)=>{
         //now only instructor will be able to create the courses and all. we will handle this by auth middlewares.  also we also need instructor id to put in course schema model
         // we also sent payload also in req while doing authen and autorization. we can use that here to get id. refer to login controller and auth middleware
         const userId=req.user.id
+        if (!status || status === undefined) {
+			status = "Draft";
+		}
         const instructorDetails=await User.findById({_id:userId})
         console.log("Instructor details: ",instructorDetails)
 
@@ -50,6 +53,8 @@ exports.createCourse=async (req,res)=>{
             courseName,
             courseDescription,
             price,
+            tag,
+            status:status,
             instructor:instructorDetails._id,
             whatYouWillLearn,
             category:categoryDetails._id,
