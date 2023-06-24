@@ -44,6 +44,10 @@ const courseSchema=new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"Category",
+    },
+    countOfStudentsEnrolled:{
+        type:Number,
+        default:0
     }
 })
 

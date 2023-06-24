@@ -131,7 +131,11 @@ exports.verifySignature=async (req,res)=>{
                 message:"course not found"
             })
         }
-        
+        //update the total enrolled cunt too in course
+        let currentEnrolledCount=updatedCourseDetails.countOfStudentsEnrolled
+        currentEnrolledCount=currentEnrolledCount+1
+        const againUpdatedCourseDetails=await Course.findByIdAndUpdate({_id:courseId},{countOfStudentsEnrolled:currentEnrolledCount})
+
         //find user and update there too
         const updatedUserDetails=await User.findByIdAndUpdate({_id:userid},{$push:{courses:courseId}},{new:true})
 
