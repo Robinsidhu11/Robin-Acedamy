@@ -77,11 +77,11 @@ exports.categoryPageDetails=async (req,res)=>{
         }
 
         //find rest of the categories
-        //ne is not equal
+        //ne means not equal
         const restOfTheCategories=await Category.find({_id:{$ne:categoryid}}).populate("courses").exec() 
 
         //TODO: TOP SELLING COURSES, say top 10 courses
-        const topSellingCourses;
+        const topSellingCourses=await Course.find({}).sort({countOfStudentsEnrolled:"desc"}).exec()
         //return
         return res.status(200).json({
             success:true,
