@@ -1,6 +1,6 @@
 const User=require('../models/User')
 const Profile=require('../models/Profile')
-
+const {uploadImageToCloudinary}=require('../utils/imageUploader')
 //we wont be creating profile rather we will be updating profile.
 // because we already created profile while creatiing a user (sign up). so now we have profile linked to every user just thing is that
 // we had put everything null in profile
@@ -97,3 +97,54 @@ exports.getAllUserDetails=async (req,res)=>{
         })
     }
 }
+
+//updates the picure to display in user's profile
+exports.updateDisplayPicture=async (req,res)=>{
+    try{
+        //get user id
+        const userid=req.user.id
+
+        //validation
+        if(!userid){
+            return res.status(400).json({
+                success:false,
+                message:"user id not avaliable"
+            })
+        }
+
+        //validate user from db
+        const userDetails=await User.findById({_id:userid})
+
+        if(!userDetails){
+            return res.status(400).json({
+                success:false,
+                message:"no such user exist in db"
+            })
+        }
+
+        //fetch new profile pic
+        const newProfilePicture=req.files.profilePicture
+        //upload to cloudinary and save secure image url in user db
+        const uploadedImage=await uploadImageToCloudinary(newProfilePicture,process.env.FOLDER_NAME_PROFILEPIC,1000,1000)
+        const updatedUserDetails=await User.findByIdAndUpdate({_id:userid},{image:uploadedImage.secure_url},{new:true})
+
+        return res.status(200).json({
+            success:true,
+            message:"profile pic updated successfully",
+            updatedUserDetailsAre:updatedUserDetails
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"cant update picture",
+            error:err.message
+        })
+    }
+}
+
+//get all the courses user has enrolled to
+exports.getEnrolledCourses=async (req,res)=>{
+    
+}
+
