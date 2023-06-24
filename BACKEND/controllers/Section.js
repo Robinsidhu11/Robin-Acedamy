@@ -73,7 +73,7 @@ exports.updateSection=async (req,res)=>{
         })
     }
 }
-
+//delete the section
 exports.deleteSection=async (req,res)=>{
     try{
         //fetch section id (say this time we get it from params)
