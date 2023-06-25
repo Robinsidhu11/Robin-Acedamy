@@ -1,6 +1,6 @@
 const Course=require('../models/Course')
 const Section=require('../models/Section')
-
+const SubSection=require('../models/SubSection')
 //to create a section
 exports.createSection= async (req,res)=>{
     try{
@@ -97,7 +97,13 @@ exports.deleteSection=async (req,res)=>{
             {new:true}
         )
         // console.log("checkpoint2",sectionId)
-        //TODO: all the inside subsectins also to be deleted too that are presnt in this section
+        //TODO: all the inside subsections also to be deleted too that are presnt in this section
+        const sectionToBeDeleted=await Section.findById({_id:sectionId})
+        const subSectionsArray=sectionToBeDeleted.subSection;
+        subSectionsArray.map(async (ele)=>{
+            await SubSection.findByIdAndDelete({_id:ele})
+        })
+        //delete the section itself
         const deletedSection=await Section.findByIdAndDelete({_id:sectionId})
         
         return res.status(200).json({
