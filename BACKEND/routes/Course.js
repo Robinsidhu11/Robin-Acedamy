@@ -30,16 +30,16 @@ Routes.post("/createCourse",authenticate,isInstructor,createCourse)
 Routes.post("/addSection",authenticate,isInstructor,createSection)
 
 //update a section
-Routes.post("/updateSection",authenticate,isInstructor,updateSection)
+Routes.put("/updateSection",authenticate,isInstructor,updateSection)
 
 //delete a section
-Routes.post("/updateSection",authenticate,isInstructor,deleteSection)
+Routes.put("/deleteSection/:sectionId",authenticate,isInstructor,deleteSection)
 
 //edit subsection
-Routes.post("/updateSubSection",authenticate,isInstructor,updateSubSection)
+Routes.put("/updateSubSection",authenticate,isInstructor,updateSubSection)
 
 //delete sub section
-Routes.post("/deleteSubSection",authenticate,isInstructor,deleteSubSection)
+Routes.delete("/deleteSubSection",authenticate,isInstructor,deleteSubSection)
 
 //add a subsection a section (create a subs section)
 Routes.post("/addSubSection",authenticate,isInstructor,createSubSection)
@@ -48,7 +48,7 @@ Routes.post("/addSubSection",authenticate,isInstructor,createSubSection)
 Routes.post("/getAllCourses",showAllCourses)
 
 // Get Details for a Specific Courses
-Routes.post("/getCourseDetails",getCourseDetails)
+Routes.get("/getCourseDetails",getCourseDetails)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)
@@ -57,7 +57,7 @@ Routes.post("/getCourseDetails",getCourseDetails)
 // TODO: Put IsAdmin Middleware here
 
 Routes.post("/createCategory",authenticate,isAdmin,createCategory)
-Routes.post("/showAllCategories",getAllCategories)
+Routes.get("/showAllCategories",getAllCategories)
 Routes.post("/getCategoryPageDetails",categoryPageDetails)
 
 // ********************************************************************************************************

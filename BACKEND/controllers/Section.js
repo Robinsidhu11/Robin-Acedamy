@@ -30,7 +30,7 @@ exports.createSection= async (req,res)=>{
         return res.status(200).json({
             success:true,
             message:"section created successfully",
-            updatedCourse
+            data: updatedCourse
         })
     }
     catch(err){
@@ -77,8 +77,8 @@ exports.updateSection=async (req,res)=>{
 exports.deleteSection=async (req,res)=>{
     try{
         //fetch section id (say this time we get it from params)
-        const sectionId=req.params
-        const courseID=req.body //REQ TO DELETE THE SECTION ID FROM COURSE CONTENT IN COURSE
+        const {sectionId}=req.params
+        const {courseID}=req.body //REQ TO DELETE THE SECTION ID FROM COURSE CONTENT IN COURSE
 
         //validate
 
@@ -89,15 +89,17 @@ exports.deleteSection=async (req,res)=>{
             })
         }
 
+        // console.log("checkpoint1",sectionId,courseID)
         //delete it from section and also delete section id from course content in course
-        const deletedSection=await Section.findByIdAndDelete({_id:sectionId})
-
         const updatedCourse=await Course.findByIdAndUpdate(
             {_id:courseID},
             {$pull: {courseContent:sectionId}},
             {new:true}
         )
-
+        // console.log("checkpoint2",sectionId)
+        //TODO: all the inside subsectins also to be deleted too that are presnt in this section
+        const deletedSection=await Section.findByIdAndDelete({_id:sectionId})
+        
         return res.status(200).json({
             success:true,
             message:"section deleted successfully",

@@ -13,6 +13,12 @@ exports.sendOTP=async (req,res)=>{
     try{
         const {email}=req.body
         // check if email already exist in db ( although no need of doing this because we will be doing this at signup phase too)
+        if(!email){
+            return res.status(401).json({
+                success:false,
+                message:"need email at all cost"
+            })
+        }
         const isPresent=await User.findOne({email:email})
         if(isPresent){
             return res.status(401).json({
@@ -43,7 +49,8 @@ exports.sendOTP=async (req,res)=>{
         console.log("OTP GENERATED IS ",otpvalue)
 
         //add otp to otp collection
-        const response=await otp.create({email,otp:otpvalue})
+        
+        const response=await Otp.create({email,otp:otpvalue})
         console.log("OTP Body is",response)
 
         //now this will get executed and returned only if pre middleware for otp should have worked perfectly. else we will go to catch
@@ -93,12 +100,17 @@ exports.signUp=async (req,res)=>{
         //find most recent otp from db
         const recentOtp=await Otp.findOne({email}).sort({createdAt:-1}).limit(1)
         console.log("RECENT OTP IS ",recentOtp)
-
+        if(!recentOtp){
+            return res.status(400).json({
+                success:false,
+                message:"invalid OTP"
+            })
+        }
         //validate otp
         if(recentOtp.length==0){
             return res.status(400).json({
                 success:false,
-                message:"Recent OTP found"
+                message:"Recent OTP not found"
             })
         }
         else if(otp !== recentOtp.otp){
@@ -198,7 +210,8 @@ exports.login=async (req,res)=>{
             }
             res.cookie("token",token,options).status(200).json({
                 success:true,
-                message:"user logged in and token generated successfully"
+                message:"user logged in and token generated successfully",
+                userDetails:isRegistered
             })
         }
         else{

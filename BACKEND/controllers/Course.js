@@ -1,9 +1,9 @@
-const uploadImageToCloudinary=require('../utils/imageUploader')
+const {uploadImageToCloudinary}=require('../utils/imageUploader')
 const Category=require('../models/Category')
 const course=require('../models/Course')
 const User = require('../models/User')
 const Course = require('../models/Course')
-
+require("dotenv").config()
 exports.createCourse=async (req,res)=>{
     try{
         //fetch data
@@ -13,20 +13,23 @@ exports.createCourse=async (req,res)=>{
         const thumbnail=req.files.thumbnailImage
 
         //validation
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || tag){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !tag){
             return res.status(400).json({
                 success:false,
                 message:"all fields are required"
             })
         }
-
+        
         //now only instructor will be able to create the courses and all. we will handle this by auth middlewares.  also we also need instructor id to put in course schema model
         // we also sent payload also in req while doing authen and autorization. we can use that here to get id. refer to login controller and auth middleware
         const userId=req.user.id
-        if (!status || status === undefined) {
-			status = "Draft";
-		}
+        
+        // if (!status || status === undefined) {
+		// 	status = "Draft";
+		// }
+        
         const instructorDetails=await User.findById({_id:userId})
+        
         console.log("Instructor details: ",instructorDetails)
 
         if(!instructorDetails){
@@ -37,17 +40,18 @@ exports.createCourse=async (req,res)=>{
         }
 
         //extra layer checking if category is valid or not
-        const categoryDetails=await Category.findById({category})
+        const categoryDetails=await Category.findOne({_id:category})
+        // console.log("CECKPINT",userId)
         if(!categoryDetails){
             return res.status(400).json({
                 success:false,
                 message:"category details not found"
             })
         }
-
+        
         //upload thumbnail image to cloudinary
-        const thumbnailUpoaded=await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME);
-
+        const thumbnailUpoaded=await uploadImageToCloudinary(thumbnail,process.env.FOLDER_NAME_COURSESTHUMBNAIL);
+        
         //create entry in db for this course
         const newCourse=await course.create({
             courseName,
@@ -116,9 +120,11 @@ exports.showAllCourses=async (req,res)=>{
 //get one course details (not ids of inner object. do populate everything inside that too)
 exports.getCourseDetails=async (req,res)=>{
     try{
+        // console.log("running")
         //get course id from req body
         const {courseid}=req.body
         //findcourse details
+        
         const CourseDetails=await Course.findById({_id:courseid}).populate(
             { //populates the instruor in course and also additondetails inside that instructor's user model too
                 path:"instructor",
@@ -142,6 +148,12 @@ exports.getCourseDetails=async (req,res)=>{
                 message:"course not found"
             }) 
         }
+
+        return res.status(200).json({
+            success:true,
+            message:"course fetched successfully",
+            data:CourseDetails
+        })
     }
     catch(err){
         return res.status(500).json({

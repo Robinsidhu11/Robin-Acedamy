@@ -1,6 +1,6 @@
 const Section=require('../models/Section')
 const SubSection=require('../models/SubSection')
-const uploadImageToCloudinary=require('../utils/imageUploader')
+const {uploadImageToCloudinary}=require('../utils/imageUploader')
 
 //create sub section
 exports.createSubSection=async (req,res)=>{
@@ -17,13 +17,13 @@ exports.createSubSection=async (req,res)=>{
                 message:"all fields are required."
             })
         }
-        
+           
         //upload video to cloudinary
-        const uploadDetails=await uploadImageToCloudinary(videofile,process.env.FOLDER_NAME)
-
+        const uploadDetails=await uploadImageToCloudinary(videofile,process.env.FOLDER_NAME_COURSESVIDEOS)
+        
         //create subsection
         const newSubSection=await SubSection.create({title,description,videoUrl:uploadDetails.secure_url,timeDuration:`${uploadDetails.duration}`})
-
+        
         //update the section now with id of above created subsection
         const updatedSection=await Section.findByIdAndUpdate(
             {_id:sectionID},
@@ -42,7 +42,8 @@ exports.createSubSection=async (req,res)=>{
     catch(err){
         return res.status(500).json({
             success:false,
-            message:"cant create sub section right now"
+            message:"cant create sub section right now",
+            error:err.message
         })
     }
 }

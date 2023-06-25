@@ -1,6 +1,7 @@
 const bcrypt=require('bcrypt')
 const User=require('../models/User')
 const mailsender=require('../utils/mailSender')
+const crypto=require('crypto')
 //resetPasswordToken just create and send link in a mail to user. also adds this token and its expiry in user's body schema too
 exports.resetPasswordTokenCreate=async (req,res)=>{
     try{
@@ -54,6 +55,12 @@ exports.resetPasswordFn=async (req,res)=>{
     try{    
         //thats why we passed reset token in user schema. because now we will be able to track that user by using reset token. which ever user clicks on that link
         const {token,password,confirmPassword}=req.body
+        if(!token){
+            return res.status(403).json({
+                success:false,
+                message:"token is required"
+            })
+        }
         //if passwords dont match
         if(password!==confirmPassword){
             return res.status(403).json({

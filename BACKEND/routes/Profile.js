@@ -8,7 +8,7 @@ const {updateProfile,getAllUserDetails,updateDisplayPicture,getEnrolledCourses}=
 const {deleteAccount}=require('../controllers/DeleteAccount')
 
 // Delete User Account
-profileRoutes.delete("/deleteProfile",deleteAccount)
+profileRoutes.delete("/deleteProfile",authenticate,deleteAccount)
 
 profileRoutes.put("/updateProfile",authenticate,updateProfile)
 profileRoutes.put("/updateDisplayProfile",authenticate,updateDisplayPicture)
