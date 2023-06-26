@@ -123,6 +123,9 @@ module.exports = {
         800: "#171717",
         900: "#141414",
       },
+      gradientcolor1:"#1FA2FF",
+      gradientcolor2:"#12D8FA",
+      gradientcolor3:"#A6FFCB"
     },
     extend: {
       maxWidth: {
@@ -131,6 +134,9 @@ module.exports = {
       },
       boxShadow: {
         'button1shadow': '0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset',
+        'demobuttonshadow':'-2px -2px 0px 0px rgba(255, 255, 255, 0.18) inset',
+        'videoshadow1':'20px 20px 0px 0px #F5F5F5'
+        
       }
     },
   },
