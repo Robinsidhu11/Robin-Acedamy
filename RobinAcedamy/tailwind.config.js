@@ -125,7 +125,17 @@ module.exports = {
       },
       gradientcolor1:"#1FA2FF",
       gradientcolor2:"#12D8FA",
-      gradientcolor3:"#A6FFCB"
+      gradientcolor3:"#A6FFCB",
+      eclipse1gradientcolor1:'#8A2BE2', 
+      eclipse1gradientcolor2:'#FFA500', 
+      eclipse1gradientcolor3:'#F8F8FF', 
+      eclipse2gradientcolor1:'#1FA2FF', 
+      eclipse2gradientcolor2:'#12D8FA', 
+      eclipse2gradientcolor3:'#A6FFCB',
+      gradient2color1:"#5433FF",
+      gradient2color2:"#20BDFF",
+      gradient2color3:"#A5FECB",
+     
     },
     extend: {
       maxWidth: {

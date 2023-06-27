@@ -1,0 +1,15 @@
+.outerbox{
+    background: linear-gradient(141deg, rgba(14, 26, 45, 0.24) 0%, rgba(17, 30, 50, 0.38) 100%);
+    backdrop-filter: blur(26px);
+}
+.eclipse{
+    width: 372.949px;
+height: 257.054px;
+    border-radius: 372.949px;
+opacity: 0.12000000298023224;
+
+filter: blur(34px);
+
+left: -5%;
+top: -8%;
+}

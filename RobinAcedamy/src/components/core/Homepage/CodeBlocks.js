@@ -4,6 +4,7 @@ import HighlightText from './HighlightText'
 import { Link } from 'react-router-dom'
 import {FaArrowRight} from 'react-icons/fa'
 import { TypeAnimation } from 'react-type-animation'
+import "./CodeBlocks.css";
 const CodeBlocks = ({position,heading,subheading,ctabtn1,ctabtn2,codeblock,backgroundGradient,codeColor}) => {
   return (
     //if position true, means btns and data on left and code on right. else revrese
@@ -30,7 +31,7 @@ const CodeBlocks = ({position,heading,subheading,ctabtn1,ctabtn2,codeblock,backg
         </div>
 
         {/* section2 */}
-        <div className='h-fit  flex flex-row text-10[px] w-[100%] py-4 lg:w-[500px]'>
+        <div className='h-fit  flex flex-row text-10[px] w-[50%] py-4 lg:w-[500px] outerbox relative'>
             <div className=' text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
                 <p>1</p>
                 <p>2</p>
@@ -52,6 +53,9 @@ const CodeBlocks = ({position,heading,subheading,ctabtn1,ctabtn2,codeblock,backg
             }
             omitDeletionAnimation={true}></TypeAnimation>
             </div>
+            
+            {/* eclipse */}
+            <div className={`absolute eclipse ${backgroundGradient==="yellow"?" bg-gradient-to-r from-eclipse1gradientcolor1 via-eclipse1gradientcolor2 to-eclipse1gradientcolor3":" bg-gradient-to-r from-eclipse2gradientcolor1 via-eclipse2gradientcolor2 to-eclipse2gradientcolor3"}`}></div>
         </div>
     </div>
   )
