@@ -7,7 +7,7 @@ import Banner from "../assets/Images/banner.mp4"
 import HighlightText2 from '../components/core/Homepage/HighlightText2'
 import CodeBlocks from '../components/core/Homepage/CodeBlocks'
 import CourseCard from '../components/core/Homepage/CourseCard'
-
+import TimelineSection from '../components/core/Homepage/TimelineSection'
 import "./Home.css";
 const Home = () => {
   return (
@@ -86,7 +86,7 @@ const Home = () => {
       </div>
         
       {/* Section2 */}
-      <div className=' bg-white'>
+      <div className=' bg-pure-greys-5'>
         {/* 2 buttons and 1 wire grill at background */}
         <div className='py-40 wiregrill flex gap-7 justify-center'>
             <CTAbutton active={true} linkTo={"/signup"}>
@@ -109,6 +109,8 @@ const Home = () => {
                     <CTAbutton active={true} linkTo={"#"} >Learn More</CTAbutton>
                 </div>
             </div>
+            {/* part2 */}
+            <TimelineSection></TimelineSection>
          </div>
 
         

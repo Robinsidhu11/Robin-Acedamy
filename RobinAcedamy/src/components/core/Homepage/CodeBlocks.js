@@ -49,6 +49,7 @@ const CodeBlocks = ({position,heading,subheading,ctabtn1,ctabtn2,codeblock,backg
                 {
                     whiteSpace: "pre-line",
                     display:"block",
+                    
                 }
             }
             omitDeletionAnimation={true}></TypeAnimation>
