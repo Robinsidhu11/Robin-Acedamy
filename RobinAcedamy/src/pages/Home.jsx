@@ -57,12 +57,12 @@ const Home = () => {
 
         {/* codeblock2 */}
         <div>
-            <CodeBlocks position="flex-row-reverse" heading={<div className='text-4xl font-semibold'>
+            <CodeBlocks position="flex-row-reverse" heading={<div className='  text-4xl font-semibold'>
                         Start
                         <HighlightText text={" coding in "}/>
                         <br></br>
                         <HighlightText text={" seconds "}/>
-                    </div>} subheading={"Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."} ctabtn1={{active:true,linkTo:"/signup",children:`Continue Lesson`}} ctabtn2={{active:false,linkTo:"/login",children:`Learn More`}} codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</a><ahref="two/\n">Two</a><ahref="three/">Three</a>/nav>`} codeColor={"text-yellow-25"} backgroundGradient="blue">
+                    </div>} subheading={"Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."} ctabtn1={{active:true,linkTo:"/signup",children:`Continue Lesson`}} ctabtn2={{active:false,linkTo:"/login",children:`Learn More`}} codeblock={`import React from "react";\nimport CTAButton from "./button";\nimport TypeAnimation from "react-type";\nimport {faArrowRight} from "react-icons/fa";\n \nconst Home =()=>{\n return (\n <div>Home</div>\n )}\n export default Home;`} codeColor={"text-richblack-50"} backgroundGradient="blue">
 
             </CodeBlocks>
         </div>
@@ -125,7 +125,10 @@ const Home = () => {
         <InstructorSection></InstructorSection>
       </div>
       {/* Footer */}
-      <Footer></Footer>
+      <div className=' bg-richblack-800'>
+        <Footer></Footer>
+      </div>
+    
     </div>
   )
 }
