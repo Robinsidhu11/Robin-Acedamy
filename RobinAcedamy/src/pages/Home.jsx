@@ -9,6 +9,7 @@ import CodeBlocks from '../components/core/Homepage/CodeBlocks'
 import CourseCard from '../components/core/Homepage/CourseCard'
 import TimelineSection from '../components/core/Homepage/TimelineSection'
 import "./Home.css";
+import LearningLanguageSection from '../components/core/Homepage/LearningLanguageSection'
 const Home = () => {
   return (
     <div>
@@ -111,6 +112,8 @@ const Home = () => {
             </div>
             {/* part2 */}
             <TimelineSection></TimelineSection>
+            {/* part 3 */}
+            <LearningLanguageSection></LearningLanguageSection>
          </div>
 
         
