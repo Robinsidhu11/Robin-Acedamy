@@ -4,6 +4,7 @@ import Logo2 from '../../../assets/TimeLineLogo/Logo2.svg'
 import Logo3 from '../../../assets/TimeLineLogo/Logo3.svg'
 import Logo4 from '../../../assets/TimeLineLogo/Logo4.svg'
 import TimelineImage from '../../../assets/Images/TimelineImage.png'
+import "./TimelineSection.css";
 const TimelineSection = () => {
     const timeline=[
         {
@@ -28,7 +29,7 @@ const TimelineSection = () => {
         }
     ]
   return (
-    <div className='flex items-center my-16'>
+    <div className='flex items-center my-16 mb-32'>
       {/* left part */}
       <div className=' flex flex-col   w-[45%] gap-[32px]'>
         {timeline.map((obj,index)=>{
@@ -59,9 +60,32 @@ const TimelineSection = () => {
         })}
       </div>
       {/* right part */}
-      <div className='w-[55%] bg-black'>
-        <img className=' shadow-timelineimageshadow' src={TimelineImage}></img>
-      </div>
+      <div className='w-[55%] relative z-0'>
+        <img className=' shadow-timelineimageshadow ' src={TimelineImage}></img>
+
+        {/* detail box */}
+        <div className=' flex bg-caribbeangreen-700 p-[36px] gap-[52px] absolute left-[50%] translate-x-[-50%] -translate-y-[50%] '>
+            {/* left part */}
+            <div className=' flex gap-[24px] border-r border-caribbeangreen-300 px-3 pr-12'>
+                <div className=' font-inter font-bold text-[36px] leading-[44px] text-white'>10</div>
+                <div className=' flex flex-col text-[14px] font-inter font-medium leading-[22px] text-caribbeangreen-300'>
+                    <div>YEARS</div>
+                    <div>EXPERIENCES</div>
+                </div>
+            </div>
+            {/* right part */}
+            <div className=' flex gap-[24px] px-3'>
+                <div className=' font-inter font-bold text-[36px] leading-[44px] text-white'>250</div>
+                <div className=' flex flex-col text-[14px] font-inter font-medium leading-[22px] text-caribbeangreen-300'>
+                    <div>TYPES OF</div>
+                    <div>COURSES</div>
+                </div>
+            </div>
+        </div>
+
+        {/* eclipse */}
+        <div className='eclipse2 '></div>
+        </div>
     </div>
   )
 }
