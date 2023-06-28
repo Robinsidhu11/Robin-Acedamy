@@ -10,6 +10,8 @@ import CourseCard from '../components/core/Homepage/CourseCard'
 import TimelineSection from '../components/core/Homepage/TimelineSection'
 import "./Home.css";
 import LearningLanguageSection from '../components/core/Homepage/LearningLanguageSection'
+import InstructorSection from '../components/core/Homepage/InstructorSection'
+import Footer from '../components/core/Homepage/Footer'
 const Home = () => {
   return (
     <div>
@@ -116,12 +118,14 @@ const Home = () => {
             <LearningLanguageSection></LearningLanguageSection>
          </div>
 
-        
-
       </div>
       
       {/* Section3 */}
+      <div className=' bg-richblack-900'>
+        <InstructorSection></InstructorSection>
+      </div>
       {/* Footer */}
+      <Footer></Footer>
     </div>
   )
 }

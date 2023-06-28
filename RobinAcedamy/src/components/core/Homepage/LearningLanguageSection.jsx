@@ -6,7 +6,7 @@ import HighlightText from './HighlightText'
 import CTAbutton from './CTAbutton'
 const LearningLanguageSection = () => {
   return (
-    <div className=' flex flex-col items-center gap-[35px] my-16'>
+    <div className=' flex flex-col items-center gap-[35px] my-16 mb-20'>
       {/* text */}
       <div className=' flex flex-col items-center gap-[12px]' >
         <div className=' text-center text-[#000814] text-[36px] font-inter font-semibold leading-[44px] tracking-[-0.72px]'>Your swiss knife for <HighlightText text={"learning any language"}></HighlightText> </div>
