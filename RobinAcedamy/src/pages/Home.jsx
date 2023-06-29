@@ -40,9 +40,8 @@ const Home = () => {
             <CTAbutton active={false}linkTo={"/login"}>Book a Demo</CTAbutton>
         </div>
 
-        <div className=' my-8 shadow-videoshadow1 relative'>
-            {/* <div className=' w-full h-full bg-white absolute  shadow-eclipseshadow rounded-full'></div> */}
-            <video autoPlay muted loop >
+        <div className=' my-16 relative shadow-[10px_-3px_45px_-5px] shadow-blue-200 max-w-[1130px]'>
+            <video className='shadow-videoshadow1 ' autoPlay muted loop >
                 <source src={Banner}></source>
             </video>
         </div>

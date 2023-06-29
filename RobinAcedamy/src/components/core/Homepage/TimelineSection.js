@@ -4,7 +4,7 @@ import Logo2 from '../../../assets/TimeLineLogo/Logo2.svg'
 import Logo3 from '../../../assets/TimeLineLogo/Logo3.svg'
 import Logo4 from '../../../assets/TimeLineLogo/Logo4.svg'
 import TimelineImage from '../../../assets/Images/TimelineImage.png'
-import "./TimelineSection.css";
+
 const TimelineSection = () => {
     const timeline=[
         {
@@ -84,7 +84,7 @@ const TimelineSection = () => {
         </div>
 
         {/* eclipse */}
-        <div className='eclipse2 '></div>
+        <div className=' shadow-blue-200 shadow-[0px_0px_25px_0px] w-[100%] h-[100%] top-0 absolute -z-10 '></div>
         </div>
     </div>
   )

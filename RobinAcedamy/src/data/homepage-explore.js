@@ -10,15 +10,15 @@ export const HomePageExplore = [
             },
             {
                 heading : "Learn CSS",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
+                description : "This course explores advanced topics in CSS3, including animations, transitions, and layout techniques",
+                level : 'Intermediate',
+                lessionNumber : 12
             },
             {
                 heading : "Responsive Web design",
                 description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
                 level : 'Beginner',
-                lessionNumber : 6
+                lessionNumber : 8
             },
         ]
     },
@@ -29,19 +29,19 @@ export const HomePageExplore = [
                 heading : "HTML",
                 description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
                 level : 'Beginner',
-                lessionNumber : 6
+                lessionNumber : 4
             },
             {
                 heading : "CSS",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
+                description : "This course explores advanced topics in CSS3, including animations, transitions, and layout techniques",
                 level : 'Beginner',
-                lessionNumber : 6
+                lessionNumber : 8
             },
             {
                 heading : "Responsive ",
                 description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
                 level : 'Beginner',
-                lessionNumber : 6
+                lessionNumber : 4
             },
         ]
     },
@@ -50,20 +50,20 @@ export const HomePageExplore = [
         courses : [
             {
                 heading : "Java",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
+                description : "This course covers the basic concepts of Java including Data Structures and Algorithms, adding Object Oriented Programming and more.",
+                level : 'Intermediate',
                 lessionNumber : 6
             },
             {
                 heading : "Python",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
+                description : "This course covers the basic concepts of Python including Data Structures and Algorithms, adding Object Oriented Programming and more.",
                 level : 'Beginner',
                 lessionNumber : 6
             },
             {
                 heading : "SCSS",
                 description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
+                level : 'Intermediate',
                 lessionNumber : 6
             },
         ]
@@ -74,13 +74,13 @@ export const HomePageExplore = [
             {
                 heading : "Flask",
                 description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
+                level : 'Intermediate',
                 lessionNumber : 6
             },
             {
                 heading : "Django",
                 description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
+                level : 'Intermediate',
                 lessionNumber : 6
             },
             {
@@ -103,7 +103,7 @@ export const HomePageExplore = [
             {
                 heading : "Nuxt.js",
                 description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
+                level : 'Intermediate',
                 lessionNumber : 6
             },
             {
