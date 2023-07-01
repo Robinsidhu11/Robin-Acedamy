@@ -32,7 +32,7 @@ const ExploreMore = () => {
                 <div className=' flex gap-5  mx-auto w-max bg-richblack-800 text-richblack-200 p-1 rounded-full font-medium drop-shadow-[0_1.5px_rgba(255,255,255,0.25)]'>
                     {HomePageExplore.map((obj,index)=>{
                         return (
-                            <div key={index} onClick={()=>{tabClickHandler(index)}} className={`${index===currentTabIndex?"bg-richblack-900":""} text-[16px]   text-richblack-5 font-medium px-7 py-[7px] rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5`}>{obj.tag}</div>
+                            <div key={index} onClick={()=>{tabClickHandler(index)}} className={`${index===currentTabIndex?"bg-richblack-900":""} text-[16px]   text-richblack-5 font-medium px-7 py-[7px] rounded-full transition-all duration-200 cursor-pointer  hover:bg-richblack-700 hover:text-richblack-5`}>{obj.tag}</div>
                         )
                     })}
                 </div>
