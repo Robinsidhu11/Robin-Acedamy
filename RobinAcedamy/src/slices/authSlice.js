@@ -13,6 +13,7 @@ export const authSlice=createSlice({
             state.token=value.payload
         },
         setLoading(state,value){
+            console.log("value is ",value)
             state.loading=value.payload
         },
         setSignUpData(state,value){

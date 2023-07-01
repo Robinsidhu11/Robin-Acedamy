@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import robinacedmayLogo from '../../assets/Logo/logo-white-transparent.png'
 import {NavbarLinks} from '../../data/navbar-links'
 import arrowdownicon from '../../assets/icons/arrow-down.svg'
+import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch } from 'react-redux';
+import {AiOutlineShoppingCart} from "react-icons/ai"
 
 const Navbar = () => {
   const subLinks = [
@@ -27,9 +30,11 @@ const Navbar = () => {
       link:"/catalog/Data-Science"
     }
 ];
-
+  const {user}=useSelector((state)=>state.profile)
+  const {token}=useSelector((state)=>state.auth)
+  
   return (
-    <div className=' border-b-[1px] border-b-richblack-700 h-14 flex items-center'>
+    <div className=' border-b-[1px] border-b-richblack-700 h-14 flex items-center'  >
       <div className=' w-11/12 flex items-center justify-between  mx-auto max-w-maxContent'>
 
         {/* logo */}
@@ -54,6 +59,30 @@ const Navbar = () => {
                 </div>):<Link  key={index} to={obj.path}>{obj.title}</Link>
             ))}
         </div>
+
+        {/* signup/login/dashboard */}
+        <div className='flex gap-x-4 items-center'> 
+                    {/* add to cart but should be visible to user student only */}
+                    {
+                      user && user?.accountType!="Instructor" &&(
+                        <Link to={"./dashboard/cart"} className=' relative'>
+                        <AiOutlineShoppingCart />
+                        {
+                          totalItems>0 &&(
+                            <span>{totalItems}</span>
+                          )
+                        }
+                        </Link>
+                      )
+                    }
+
+                    {/* loginbutton*/}
+                    {
+
+                    }
+                    
+        </div>
+
       </div>
       
     </div>
