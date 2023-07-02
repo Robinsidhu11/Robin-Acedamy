@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, matchPath, useLocation } from 'react-router-dom'
 import robinacedmayLogo from '../../assets/Logo/logo-white-transparent.png'
 import {NavbarLinks} from '../../data/navbar-links'
 import arrowdownicon from '../../assets/icons/arrow-down.svg'
@@ -30,6 +30,16 @@ const Navbar = () => {
       link:"/catalog/Data-Science"
     }
 ];
+
+const location=useLocation()
+
+//to match url part after base url
+function matchCase(route){
+  let loc=location.pathname.split('/')
+  loc="/"+loc[1]
+  // console.log("route :",route," ",loc)
+  return matchPath({path:route},loc)
+}
   const {user}=useSelector((state)=>state.profile)
   const {token}=useSelector((state)=>state.auth)
   const {totalItems} = useSelector( (state) => state.cart)
@@ -44,7 +54,7 @@ const Navbar = () => {
         <div className='flex gap-x-6 text-richblack-25'>
             {NavbarLinks.map((obj,index)=>(
               obj.title=="Catalog"?(
-                <div key={index} className=' flex items-center gap-1 cursor-pointer relative group'>
+                <div key={index} className={`flex items-center gap-1 cursor-pointer relative group ${matchCase("/catalog")?"text-yellow-25":"text-richblack-25"}`}>
                   Catalog <img src={arrowdownicon} width={16} height={16}></img>
                   {/* rectangle box */}
                   <div className=' font-inter invisible opacity-0 absolute z-10 top-10 -left-32 rounded-lg bg-richblack-5 p-4 w-[300px] h-fit  text-richblack-900 flex flex-col group-hover:opacity-100 group-hover:visible hover:visible hover:opacity-100 transition-all duration-200'>
@@ -56,7 +66,7 @@ const Navbar = () => {
                     {/* rotated box */}
                     <div className='absolute h-6 w-6 rotate-45 rounded bg-richblack-5 translate-y-[-105%]  left-[61%]'></div>
                   </div>
-                </div>):<Link  key={index} to={obj.path}>{obj.title}</Link>
+                </div>):<Link  key={index} to={obj.path}><p className={`${matchCase(obj?.path)?"text-yellow-25":"text-richblack-25"}`}>{obj.title}</p></Link>
             ))}
         </div>
 
@@ -94,9 +104,9 @@ const Navbar = () => {
                         )
                     }
                     {/* profile dropdown */}
-                    {
+                    {/* {
                       token !==null && <ProfileDropDown></ProfileDropDown>
-                    }  
+                    }   */}
         </div>
 
       </div>
