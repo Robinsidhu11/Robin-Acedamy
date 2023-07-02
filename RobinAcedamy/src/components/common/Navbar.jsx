@@ -32,7 +32,7 @@ const Navbar = () => {
 ];
   const {user}=useSelector((state)=>state.profile)
   const {token}=useSelector((state)=>state.auth)
-  
+  const {totalItems} = useSelector( (state) => state.cart)
   return (
     <div className=' border-b-[1px] border-b-richblack-700 h-14 flex items-center'  >
       <div className=' w-11/12 flex items-center justify-between  mx-auto max-w-maxContent'>
@@ -78,9 +78,25 @@ const Navbar = () => {
 
                     {/* loginbutton*/}
                     {
-
+                        token===null && (
+                          <Link to={"./login"}><button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
+                            Log in
+                        </button></Link>
+                        )
                     }
-                    
+
+                    {/*sign up button*/}
+                    {
+                        token===null && (
+                          <Link to={"./signup"}><button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
+                            Sign Up
+                        </button></Link>
+                        )
+                    }
+                    {/* profile dropdown */}
+                    {
+                      token !==null && <ProfileDropDown></ProfileDropDown>
+                    }  
         </div>
 
       </div>

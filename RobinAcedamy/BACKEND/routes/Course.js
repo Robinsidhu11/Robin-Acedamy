@@ -45,7 +45,7 @@ Routes.delete("/deleteSubSection",authenticate,isInstructor,deleteSubSection)
 Routes.post("/addSubSection",authenticate,isInstructor,createSubSection)
 
 // Get all Registered Courses
-Routes.post("/getAllCourses",showAllCourses)
+Routes.get("/getAllCourses",showAllCourses)
 
 // Get Details for a Specific Courses
 Routes.get("/getCourseDetails",getCourseDetails)

@@ -105,7 +105,8 @@ exports.showAllCourses=async (req,res)=>{
 
         return res.status(200).json({
             success:true,
-            message:"all courses fetched successfully"
+            message:"all courses fetched successfully",
+            data:allCourses
         })
     }
     catch(err){

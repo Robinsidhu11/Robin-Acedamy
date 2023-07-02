@@ -20,7 +20,7 @@ dBConnectFn()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    //imp to write so that any request from this above page gets entertain by our server
+    //important to write so that any request from this above page gets entertain by our server
     origin:"http://localhost:3000",
     credentials:true
 }))
@@ -40,14 +40,15 @@ app.use("/api/v1/profile",profileRoutes)
 app.use("/api/v1/course",courseRoutes)
 app.use("/api/v1/payment",paymentsRoutes)
 
+
+app.listen(PORT,()=>{
+    console.log(`app is running at ${PORT}`)
+})
+
 //default route
 app.get("/",(req,res)=>{
     return res.json({
         success:true,
         message:"your server is up and running"
     })
-})
-
-app.listen(PORT,()=>{
-    console.log(`app is running at ${PORT}`)
 })
