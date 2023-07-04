@@ -44,8 +44,8 @@ function matchCase(route){
   const {token}=useSelector((state)=>state.auth)
   const {totalItems} = useSelector( (state) => state.cart)
   return (
-    <div className=' border-b-[1px] border-b-richblack-700 h-14 flex items-center'  >
-      <div className=' w-11/12 flex items-center justify-between  mx-auto max-w-maxContent'>
+    <div className={` border-b-[1px] border-b-richblack-700 h-14 flex items-center ${location.pathname==="/"?"":" bg-richblack-800"} `}  >
+      <div className=' w-11/12 flex items-center justify-between  mx-auto max-w-[1200px]'>
 
         {/* logo */}
         <img src={robinacedmayLogo} width={180} ></img>
