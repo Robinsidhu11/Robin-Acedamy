@@ -1,5 +1,5 @@
 //writing all the apis for backend calls
-require('dotenv').config()
+
 const BASE_URL=process.env.REACT_APP_BASE_URL
 
 //auth endpoints

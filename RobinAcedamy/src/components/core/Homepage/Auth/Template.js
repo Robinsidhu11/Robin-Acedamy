@@ -1,5 +1,7 @@
 import React from 'react'
 import frameback from '../../../../assets/Images/frame.png'
+import LoginForm from './LoginForm'
+import SignUpForm from './SignUpForm'
 const Template = ({title,description1,description2,formType,image}) => {
   return (
     <div className=' w-11/12 max-w-[1200px] mx-auto flex flex-row justify-between items-center my-36'>
