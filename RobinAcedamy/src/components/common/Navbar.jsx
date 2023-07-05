@@ -103,6 +103,17 @@ function matchCase(route){
                         </button></Link>
                         )
                     }
+
+                    {/*logout button*/}
+                    {
+                        token!==null && (
+                          <Link ><button  className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'>
+                            Logout
+                        </button></Link>
+                        )
+                    }
+
+
                     {/* profile dropdown */}
                     {/* {
                       token !==null && <ProfileDropDown></ProfileDropDown>

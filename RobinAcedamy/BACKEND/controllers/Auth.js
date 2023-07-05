@@ -169,7 +169,7 @@ exports.login=async (req,res)=>{
         if(!email || !password){
             return res.status(403).json({
                 success:false,
-                message:"fill all fields first"
+                message:"Fill all fields first"
               
             })
         }
@@ -179,7 +179,7 @@ exports.login=async (req,res)=>{
         if(! isRegistered){
             return res.status(400).json({
                 success:false,
-                message:"user is not registered. signup first"
+                message:"User not registered. Please Signup First"
               
             })
         }
@@ -196,7 +196,7 @@ exports.login=async (req,res)=>{
                 id:isRegistered._id
             }
             const token=await jwt.sign(payload,process.env.JWT_SECRET,{
-                expiresIn:"2h"
+                expiresIn:"24h"
             })
             isRegistered.password=undefined
             isRegistered.token=token
@@ -210,6 +210,7 @@ exports.login=async (req,res)=>{
             }
             res.cookie("token",token,options).status(200).json({
                 success:true,
+                token,
                 message:"user logged in and token generated successfully",
                 userDetails:isRegistered
             })

@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 const Template = ({title,description1,description2,formType,image}) => {
   return (
-    <div className=' w-11/12 max-w-[1200px] mx-auto flex flex-row justify-between items-center my-36'>
+    <div className={` w-11/12 max-w-[1200px] mx-auto flex flex-row justify-between  ${formType=="login"?"my-36 items-center":"my-16"}`}>
     {/* left side */}
     <div className=' flex flex-col gap-[27px] w-[40%] '>
         {/* title  */}
@@ -18,8 +18,8 @@ const Template = ({title,description1,description2,formType,image}) => {
         {formType=="login"?<LoginForm></LoginForm>:<SignUpForm></SignUpForm>}
     </div>
     {/* right side */}
-      <div className=' relative'>
-        <img src={image} className='w-[440px] h-[406px] absolute top-[-5%] left-[-3.4%] z-10' ></img>
+      <div className={` relative ${formType=="login"?"":"mt-10"}`}>
+        <img src={image} className='w-[440px] h-[406px] absolute top-[-4%] left-[-3.4%] z-10' ></img>
         <div className='frame w-[440px] h-[406px]'><img src={frameback}></img></div>
       </div>
     </div>
