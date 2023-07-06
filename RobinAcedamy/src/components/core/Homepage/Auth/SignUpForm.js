@@ -1,20 +1,44 @@
 import React, { useState } from 'react'
-import { handleSignup } from '../../../../services/operations/AuthAPI'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-
+import { setSignUpData } from '../../../../slices/authSlice'
+import { useDispatch } from 'react-redux'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { sendOTP } from '../../../../services/operations/AuthAPI'
 const SignUpForm = () => {
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
   const [accountType,setAccountType]=useState("Student")
   const [showPassword1,setShowPassword1]=useState(false)
   const [showPassword2,setShowPassword2]=useState(false)
-  
+  const [formData,setFormData]=useState({email:"",password:"",confirmPassword:"",firstName:"",lastName:"",accountType:"Student"})
   function tabChangeHandler(event){
     setAccountType(event.target.innerText)
+    setFormData((prev)=>{
+      return {...prev,["accountType"]:event.target.innerText}
+    })
   }
-  function submitHandler(){
+  function submitHandler(event){
+    event.preventDefault()
+    //if paswsword doesnt match dont let the request to send OTP occur nor update state of signup data
+    if(formData.password!==formData.confirmPassword){
+      toast.error("Passwords doesn't match")
+      return
+    }
+    // console.log(formData)
 
+    // Setting formup data to state
+    // To be used after otp verification
+    dispatch(setSignUpData(formData))
+    // Send OTP to user for verification
+    dispatch(sendOTP(formData.email,navigate))
   }
-  function changeHandler(){
-
+  function changeHandler(event){
+    setFormData((prev)=>{
+      return {...prev,
+      [event.target.name]:event.target.value
+      }
+    })
   }
   return (
     <div className='flex flex-col gap-4'>
@@ -22,8 +46,8 @@ const SignUpForm = () => {
         <div className='flex bg-richblack-800 p-1 gap-x-1  rounded-full max-w-max' style={{
           boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
         }}>
-          <div onClick={tabChangeHandler} className={` cursor-pointer ${accountType=="Student"?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}>Student</div>
-          <div onClick={tabChangeHandler} className={` cursor-pointer ${accountType=="Instructor"?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}>Instructor</div>
+          <div onClick={tabChangeHandler} name="accountType" className={` cursor-pointer ${accountType=="Student"?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}>Student</div>
+          <div onClick={tabChangeHandler} name="accountType" className={` cursor-pointer ${accountType=="Instructor"?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}>Instructor</div>
         </div>
         <form onSubmit={submitHandler} className=' flex flex-col gap-4' >
             {/* first and last name */}
