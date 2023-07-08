@@ -11,7 +11,7 @@ exports.resetPasswordTokenCreate=async (req,res)=>{
         if(!email){
             return res.status(403).json({
                 success:false,
-                message:"email doesn't exist"
+                message:"This Email doesn't exist"
             })
         }
         //if no user exist in db
@@ -19,7 +19,7 @@ exports.resetPasswordTokenCreate=async (req,res)=>{
         if(! user){
             return res.status(403).json({
                 success:false,
-                message:"this email is not registered. please sign up"
+                message:"This email is not registered. Please sign up"
             })
         }
         //generate token using inbuilt crypto library
@@ -31,14 +31,14 @@ exports.resetPasswordTokenCreate=async (req,res)=>{
             resetPasswordTokenExpiry:Date.now() + 5*60*1000
         },{new:true})
         
-        //create url to bent to user in email
-        const url=`https://localhost:3000/update-password/${token}`
+        //create url to sent to user in email
+        const url=`localhost:3000/update-password/${token}`
 
         //send email
         await mailsender(email,"Reset Password mail",`Reset Password Link: ${url}`)
         return res.status(200).json({
             success:true,
-            message:"reset link sent through email successfully"
+            message:"Reset Link Sent Successfully"
         })
     }
     catch(err){
@@ -85,7 +85,7 @@ exports.resetPasswordFn=async (req,res)=>{
         if(user.resetPasswordTokenExpiry < Date.now()){
             return res.status(403).json({
                 success:false,
-                message:"token expired oops"
+                message:"token expired oops. Kindly resend"
             })
         }
 

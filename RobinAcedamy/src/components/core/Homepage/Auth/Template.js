@@ -7,7 +7,7 @@ const Template = ({title,description1,description2,formType,image}) => {
   const {loading}=useSelector((state)=>state.auth)
   return (
     <div className={` w-11/12 max-w-[1200px] mx-auto ${loading==true?"flex justify-center items-center h-[90vh]":""} `}>
-    {loading?<span class="loader"></span>:<div className={`flex flex-row justify-between  ${formType=="login"?"my-36 items-center":"my-16"}`}>
+    {loading?<span className="loader"></span>:<div className={`flex flex-row justify-between  ${formType=="login"?"my-36 items-center":"my-16"}`}>
       {/* left side */}
     <div className=' flex flex-col gap-[27px] w-[40%] '>
         {/* title  */}

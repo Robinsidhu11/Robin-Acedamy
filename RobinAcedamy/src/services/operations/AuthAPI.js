@@ -111,3 +111,22 @@ export const handleLogout=(navigate)=>{
         navigate("/")
     }
 }
+
+export const getPasswordResetToken=(email,setEmailSent)=>{
+    return async(dispatch)=>{
+        const toastid=toast.loading("Loading...")
+            dispatch(setLoading(true))
+        try{
+            const response=await apiConnector("POST",RESETPASSTOKEN_API,{email})
+            console.log(response)
+            toast.success(response.data.message)
+            setEmailSent(true)
+        }
+        catch(err){
+            console.log("API ERROR............", err)
+            toast.error(err.response.data.message)
+        }
+        dispatch(setLoading(false))
+        toast.dismiss(toastid)
+    }
+}
